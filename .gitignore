@@ -1,0 +1,13 @@
+# Node.js
+**/node_modules
+
+# dotenv files
+.env.*
+
+# Docker
+**/Dockerfile
+**/docker-compose.override.yml
+**/.dockerignore
+
+# OS junk
+.DS_Store

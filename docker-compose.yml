@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: timestack-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: timestack
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  node-api:
+    build: ./node-api
+    container_name: timestack-node-api
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./node-api/.env.docker
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
