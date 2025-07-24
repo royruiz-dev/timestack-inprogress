@@ -6,3 +6,30 @@
 
 # OS junk
 .DS_Store
+
+# ─── React Frontend ───────────────────────────────────────────
+
+# Logs
+react-frontend/logs
+react-frontend/*.log
+react-frontend/npm-debug.log*
+react-frontend/yarn-debug.log*
+react-frontend/yarn-error.log*
+react-frontend/pnpm-debug.log*
+react-frontend/lerna-debug.log*
+
+# Dependencies and builds
+react-frontend/node_modules
+react-frontend/dist
+react-frontend/dist-ssr
+react-frontend/*.local
+
+# Editor directories and files
+react-frontend/.vscode/*
+react-frontend/.idea
+react-frontend/.DS_Store
+react-frontend/*.suo
+react-frontend/*.ntvs*
+react-frontend/*.njsproj
+react-frontend/*.sln
+react-frontend/*.sw?
