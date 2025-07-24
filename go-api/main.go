@@ -4,12 +4,16 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 )
+
+var dbpool *pgxpool.Pool // Reference pointer to connection pool
 
 func main() {
 	// Load environment variables from .env file
@@ -19,8 +23,8 @@ func main() {
 	}
 
 	// Parse DB port
-	port := os.Getenv("DB_PORT")
-	dbPort, err := strconv.Atoi(port)
+	dbPortStr := os.Getenv("DB_PORT")
+	dbPort, err := strconv.Atoi(dbPortStr)
 	if err != nil {
 		log.Fatalf("Invalid DB_PORT: %v", err)
 	}
@@ -40,17 +44,40 @@ func main() {
 
 	// Connect to the DB
 	ctx := context.Background()
-	dbpool, err := pgxpool.NewWithConfig(ctx, config)
+	dbpool, err = pgxpool.NewWithConfig(ctx, config)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v", err)
 	}
 	defer dbpool.Close()
 
-	fmt.Println("DB_HOST:", os.Getenv("DB_HOST"))
-	fmt.Println("DB_PORT:", os.Getenv("DB_PORT"))
-	fmt.Println("DB_USER:", os.Getenv("DB_USER"))
-	fmt.Println("DB_PASSWORD:", os.Getenv("DB_PASSWORD"))
-	fmt.Println("DB_NAME:", os.Getenv("DB_NAME"))
+	// Set HTTP server port
+	const port = 8080
 
-	fmt.Println("Connected to the Database!")
+	// Define HTTP handlers
+	http.HandleFunc("/ping", pingHandler)
+	http.HandleFunc("/", timeHandler)
+
+	fmt.Printf("Server is running on port %d\n", port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+}
+
+// No need to pass Request struct for every request, passing pointer is sufficient
+func pingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("pong"))
+}
+
+func timeHandler(w http.ResponseWriter, r *http.Request) {
+	var currentTime time.Time
+	err := dbpool.QueryRow(context.Background(), "SELECT NOW()").Scan(&currentTime)
+	if err != nil {
+		log.Printf("Error querying the database: %v", err)
+		http.Error(w, "Error querying the time", http.StatusInternalServerError)
+		return
+	}
+	
+	formattedTime := currentTime.UTC().Format("2006-01-02T15:04:05.000Z")
+	
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(fmt.Sprintf(`{"currentTime":"%s"}`, formattedTime)))
 }
