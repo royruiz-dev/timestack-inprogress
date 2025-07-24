@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { Pool } from "pg";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: ".env.local" });
 
 const app = express();
 const PORT = 3000;
