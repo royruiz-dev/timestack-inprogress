@@ -7,29 +7,29 @@
 # OS junk
 .DS_Store
 
-# ─── React Frontend ───────────────────────────────────────────
+# ─── React client ───────────────────────────────────────────
 
 # Logs
-react-frontend/logs
-react-frontend/*.log
-react-frontend/npm-debug.log*
-react-frontend/yarn-debug.log*
-react-frontend/yarn-error.log*
-react-frontend/pnpm-debug.log*
-react-frontend/lerna-debug.log*
+react-client/logs
+react-client/*.log
+react-client/npm-debug.log*
+react-client/yarn-debug.log*
+react-client/yarn-error.log*
+react-client/pnpm-debug.log*
+react-client/lerna-debug.log*
 
 # Dependencies and builds
-react-frontend/node_modules
-react-frontend/dist
-react-frontend/dist-ssr
-react-frontend/*.local
+react-client/node_modules
+react-client/dist
+react-client/dist-ssr
+react-client/*.local
 
 # Editor directories and files
-react-frontend/.vscode/*
-react-frontend/.idea
-react-frontend/.DS_Store
-react-frontend/*.suo
-react-frontend/*.ntvs*
-react-frontend/*.njsproj
-react-frontend/*.sln
-react-frontend/*.sw?
+react-client/.vscode/*
+react-client/.idea
+react-client/.DS_Store
+react-client/*.suo
+react-client/*.ntvs*
+react-client/*.njsproj
+react-client/*.sln
+react-client/*.sw?
