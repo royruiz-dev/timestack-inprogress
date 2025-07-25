@@ -12,7 +12,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  node-api:
+  node-api: # Internal hostname for networking
     build: ./node-api
     container_name: timestack-node-api
     restart: always
@@ -22,6 +22,37 @@ services:
       - ./node-api/.env.docker
     depends_on:
       - postgres
+    volumes:
+      - ./node-api:/usr/src/app # For live reloading during dev
+
+  go-api: # Internal hostname for networking
+    build: ./go-api
+    container_name: timestack-go-api
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./go-api/.env.docker
+    depends_on:
+      - postgres
+    volumes:
+      - ./go-api:/usr/src/app # For live reloading during dev
+
+  react-client:
+    build: ./react-client
+    container_name: timestack-react-client
+    platform: linux/arm64
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - go-api
+      - node-api
+    volumes:
+      - ./react-client:/usr/src/app:delegated # Mount app code for hot reload
+      - /usr/src/app/node_modules # Prevent local node_modules from overwriting container's node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Fixes Vite hot reload in Docker
 
 volumes:
   pgdata:
