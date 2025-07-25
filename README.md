@@ -1,14 +1,13 @@
 ### TimeStack
 
-A simple full-stack project designed to be run in Docker including:
+A simple full-stack project designed to run in Docker, including:
 
-- Node.js API using TypeScript and PostgreSQL
-- Go API
-- React frontend using Vite and TypeScript
+- Node.js (TypeScript) and Go APIs connected to PostgreSQL (Postgres)
+- React frontend built with Vite and TypeScript
 - PostgreSQL database
 - Docker Compose for orchestration (only `node-api` and `postgres` services are configured)
 
-### How to run with Docker
+### How to Run with Docker
 
 Start the app using Docker Compose:
 
@@ -20,7 +19,7 @@ docker-compose up --build
 
 ### Running Locally
 
-To run `node-api` and `go-api` services individually for development, ensure PostgreSQL is running locally first. This starts a local Postgres container exposed on port `5432`.
+To run `node-api` and `go-api` services individually for development, ensure PostgreSQL is running locally first. This starts a Postgres container exposed on port `5432`.
 
 Start Postgres using Docker Compose:
 
@@ -47,7 +46,7 @@ DB_NAME=your_db_name
 Both APIs expose the same endpoints:
 
 - `GET /ping`: Returns "pong" (used for health checks)
-- `GET /`: Returns current time from PostegreSQL
+- `GET /`: Returns current time from PostgreSQL
 
 ### Running Each Service
 
@@ -68,30 +67,29 @@ go run main.go
 
 ### Frontend (React)
 
-- Uses Vite + TypeScript
-- Calls the API to fetch time data
+- Built with React, TypeScript, and Vite
+- Fetches time data from backend APIs (`go-api` and `node-api`)
 
-To run the React application:
+To run the React app locally:
 
 ```bash
-cd react-frontend
+cd react-client
 npm install
 npm run dev
 ```
 
 ### Next steps
 
-- [ ] Integrate `go-api` service into Docker Compose setup
-- [ ] Build React components to load data from both APIs
-- [ ] Connect React app to `go-api` and `node-api`
-- [ ] Improve frontend UX/UI
-- [ ] Add `react-frontend` to Docker Compose setup
+- [ ] Add `go-api` to Docker Compose setup
+- [ ] Refactor React app by modularizing components and API layer
+- [ ] Enhance frontend UI/UX
+- [ ] Add `react-client` to Docker Compose setup
 
 ### Tech Stack
 
 | Layer     | Stack                     |
 | :-------- | :------------------------ |
 | Frontend  | React + Vite + TypeScript |
-| Backend   | Node.js + TypeScript + Go |
-| Database  | Database                  |
+| Backend   | Node.js + TypeScript, Go  |
+| Database  | PostgreSQL                |
 | Dev Tools | Docker, Docker Compose    |
