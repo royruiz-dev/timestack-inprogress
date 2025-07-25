@@ -5,31 +5,72 @@ A simple full-stack project designed to run in Docker, including:
 - Node.js (TypeScript) and Go APIs connected to PostgreSQL (Postgres)
 - React frontend built with Vite and TypeScript
 - PostgreSQL database
-- Docker Compose for orchestration (only `node-api` and `postgres` services are configured)
+- Docker Compose for service orchestration
+
+---
 
 ### How to Run with Docker
 
-Start the app using Docker Compose:
+Docker setup now includes Node.js API, Go API, React frontend, and Postgres services. Start the app using Docker Compose:
 
 ```bash
 docker-compose up --build
 ```
 
-> **Note**: Only the Node.js API and Postgres services are included in the Docker setup. The Go API and React app are not yet containerized.
+Services:
 
-### Running Locally
+- `postgres` (PostgreSQL)
+- `node-api` (Node.js API with TypeScript)
+  - Exposes `/ping` (health check) and `/` endpoints
+- `go-api` (Go API)
+  - Exposes `/ping` (health check) and `/` endpoints
+- `react-client` (React + Vite frontend)
+  - Fetches time data from the APIs
 
-To run `node-api` and `go-api` services individually for development, ensure PostgreSQL is running locally first. This starts a Postgres container exposed on port `5432`.
+### Running Services Locally
 
-Start Postgres using Docker Compose:
+Services can be run individually for local development. If local PostgreSQL instance is not running, start the Postgres container exposed on port `5432`:
 
 ```bash
 docker compose up -d postgres
 ```
 
-### Environment Variables
+Then run each service locally:
 
-Create a `.env.local` file inside the `go-api/` and `node-api/` folders with the following variables:
+#### Node.js API:
+
+- `GET /ping`: returns "pong" (used for health checks)
+- `GET /`: returns current time from PostgreSQL
+
+```bash
+cd node-api
+npm install
+npm run dev
+```
+
+#### Go API:
+
+- `GET /ping`: returns "pong" (used for health checks)
+- `GET /`: returns current time from PostgreSQL
+
+```bash
+cd go-api
+go run main.go
+```
+
+#### React Client:
+
+- Fetches time data from `go-api` and `node-api`
+
+```bash
+cd react-client
+npm install
+npm run dev
+```
+
+### Environment Variables (Local Development)
+
+Create a `.env.local` file in `go-api/` and `node-api/` directories with:
 
 ```ini
 DB_HOST=localhost
@@ -39,51 +80,15 @@ DB_PASSWORD=your_db_password
 DB_NAME=your_db_name
 ```
 
-> **Note**: Replace the placeholders with your local credentials.
-
-### API Endpoints (Node.js & Go)
-
-Both APIs expose the same endpoints:
-
-- `GET /ping`: Returns "pong" (used for health checks)
-- `GET /`: Returns current time from PostgreSQL
-
-### Running Each Service
-
-Node.js API:
-
-```bash
-cd node-api
-npm install
-npm run dev
-```
-
-Go API:
-
-```bash
-cd go-api
-go run main.go
-```
-
-### Frontend (React)
-
-- Built with React, TypeScript, and Vite
-- Fetches time data from backend APIs (`go-api` and `node-api`)
-
-To run the React app locally:
-
-```bash
-cd react-client
-npm install
-npm run dev
-```
+> **Note**: Replace the placeholders with your local database credentials.
 
 ### Next steps
 
-- [ ] Add `go-api` to Docker Compose setup
-- [ ] Refactor React app by modularizing components and API layer
-- [ ] Enhance frontend UI/UX
-- [ ] Add `react-client` to Docker Compose setup
+- [ ] Refactor React app (modular components, API layer, better state management)
+- [ ] Add health checks, logging/observability in backend and frontend services
+- [ ] Containerize for production (multi-stage builds, environment separation, remove dev-tools, streamlined startup)
+- [ ] Set up CI/CD with ArgoCD on Google Cloud (build/push images, deploy to GKE, GitOps automation)
+- [ ] Enhance frontend UI/UX (styling, responsiveness)
 
 ### Tech Stack
 
