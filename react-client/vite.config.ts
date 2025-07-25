@@ -12,12 +12,12 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       "/api/go": {
-        target: "http://localhost:8080",
+        target: "http://go-api:8080", // hostname of 'go-api' service container
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/go/, ""),
       },
       "/api/node": {
-        target: "http://localhost:3000",
+        target: "http://node-api:3000", // hostname of 'node-api' service container
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/node/, ""),
       },
