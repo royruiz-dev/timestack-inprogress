@@ -1,42 +1,51 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
   padding: 2rem;
+
+  /* Centers entire content vertically */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
   text-align: center;
+
+  background-color: #f3f4f6; /* light mode background */
+  color: #111827; /* dark text on light */
+
+  min-height: 100vh; /* fills entire vertical space of screen */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (prefers-color-scheme: dark) {
+  #root {
+    background-color: #1f2937; /* dark mode background */
+    color: #f9fafb; /* light text on dark */
   }
 }
 
 .card {
+  border: 1px solid #ddd;
+  border-radius: 24px;
   padding: 2em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 
-.read-the-docs {
-  color: #888;
+.card button {
+  margin-top: 0.5rem;
+  background-color: #3b82f6;
+  /* background-color: #ec4899; */
+  color: white;
+}
+
+.card button:hover {
+  background-color: #2563eb;
+  /* background-color: #db2777; */
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column; /* Arranges elements vertically (use 'row' for horizontal layout) */
+  align-items: center;
+  gap: 2rem;
 }
