@@ -82,13 +82,33 @@ DB_NAME=your_db_name
 
 > **Note**: Replace the placeholders with your local database credentials.
 
-### Next steps
+### Project Progress
+
+#### Completed
+
+- [x] Created `go-api` and `node-api` services with PostgreSQL integration
+- [x] Setup PostgreSQL database named `timestack` with connection pooling
+- [x] Loaded configuration from environment variables (`.env.local`) in backend services
+- [x] Developed initial HTTP handlers and routes (`/ping`, `/`) with basic error handling in Go and Node APIs
+- [x] Added `go-api` and `node-api` services into Docker Compose with networking and volume setup
+- [x] Created `react-client` frontend to display timestamps from APIs
+- [x] Used `react-query` for data fetching with basic loading and error handling states
+- [x] Connected React app to `go-api` and `node-api` services
+- [x] Added `react-client` into Docker Compose setup
+- [x] Refactored `/ping` into health endpoint for liveness check
+- [x] Added health endpoint `/healthdb` for database connectivity check
+- [x] Integrated refresh button with "Refreshed X seconds ago" feature using `getTimeAgoString` utility
+- [x] Created `BuiltWith` React component with animated tech logos
+- [x] Enhanced overall app UI with responsive layout, color themes, and styles
+
+#### Next steps
 
 - [ ] Refactor React app (modular components, API layer, better state management)
-- [ ] Add health checks, logging/observability in backend and frontend services
+- [ ] Add additional health/readiness checks logging, observability in backend/frontend services
+- [ ] Implement API latency measurement and display in frontend UI
 - [ ] Containerize for production (multi-stage builds, environment separation, remove dev-tools, streamlined startup)
 - [ ] Set up CI/CD with ArgoCD on Google Cloud (build/push images, deploy to GKE, GitOps automation)
-- [ ] Enhance frontend UI/UX (styling, responsiveness)
+- [ ] Continue to enhance frontend UI/UX (styling, responsiveness)
 
 ### Tech Stack
 
