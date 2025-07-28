@@ -74,7 +74,6 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("pong"))
 }
 
-
 // timeHandler returns current time from database
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	var currentTime time.Time
