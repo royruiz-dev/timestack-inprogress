@@ -1,0 +1,96 @@
+.built-with {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.logos {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.logo {
+  height: 2.6em;
+  padding: 0.2em;
+  will-change: filter;
+  width: auto;
+  opacity: 0.8;
+  transition: filter 300ms, opacity 0.2s ease;
+}
+
+.logo.react {
+  animation: logo-spin infinite 20s linear;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo.vite {
+  animation: pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% {
+    filter: drop-shadow(0 0 4px #ff4f81);
+  }
+  100% {
+    filter: drop-shadow(0 0 12px #ff8fc4);
+  }
+}
+
+.logo.go {
+  animation: floatleftRight 3s linear infinite;
+}
+
+@keyframes floatleftRight {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.logo.node {
+  animation: scalePulse 2s infinite alternate;
+}
+
+@keyframes scalePulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.logo.ts {
+  animation: colorFade 2s infinite alternate;
+}
+
+@keyframes colorFade {
+  0% {
+    filter: brightness(100%);
+  }
+  100% {
+    filter: brightness(150%);
+  }
+}
