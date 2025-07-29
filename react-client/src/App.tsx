@@ -64,6 +64,10 @@ function TimeData({ label, url }: { label: string; url: string }) {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
+
+    // Retry logic to improve data fetching reliability
+    retry: 5, // Up to 5 times
+    retryDelay: 1000, // 1s delay between attempts
   });
 
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -79,7 +83,7 @@ function TimeData({ label, url }: { label: string; url: string }) {
     if (error) {
       setLatency(null);
     }
-    console.log("Latency:", latency, "isLoading:", isLoading, "error:", error);
+    // console.log("Latency:", latency, "isLoading:", isLoading, "error:", error);
   }, [latency, isLoading, error]);
 
   // Update timeAgo string every second based on lastUpdated to show live refresh timer
