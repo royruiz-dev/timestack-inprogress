@@ -101,15 +101,16 @@ function TimeData({ label, url }: { label: string; url: string }) {
 
   return (
     <div className="card">
-      <p>
-        <strong>{label}</strong>: {data.currentTime}
-      </p>
+      <h3>{label}</h3>
+      <div className="infoGrid">
+        <div className="label">⏰ Time:</div>
+        <div className="value">{data.currentTime}</div>
+        <div className="label">🔄 Last Refreshed:</div>
+        <div className="value">{lastUpdated && timeAgo}</div>
+        <div className="label">⚡︎ Latency:</div>
+        <div className="value">{latency !== null ? `${latency} ms` : ""}</div>
+      </div>
       {isFetching && <small>Updating...</small>}
-      {lastUpdated && (
-        <p>
-          <small>{timeAgo}</small>
-        </p>
-      )}
       <button onClick={handleRefresh} disabled={isFetching}>
         Refresh
       </button>

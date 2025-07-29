@@ -49,3 +49,21 @@
   align-items: center;
   gap: 2rem;
 }
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* Label fits content, value fills rest */
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+  margin: 1rem 0;
+}
+
+.label {
+  text-align: right;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.value {
+  text-align: left;
+}
