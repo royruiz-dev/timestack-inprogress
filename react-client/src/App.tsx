@@ -59,6 +59,11 @@ function TimeData({ label, url }: { label: string; url: string }) {
 
       return output;
     },
+
+    // Disables automatic refetching
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
   });
 
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -105,7 +110,9 @@ function TimeData({ label, url }: { label: string; url: string }) {
           <small>{timeAgo}</small>
         </p>
       )}
-      <button onClick={handleRefresh}>Refresh</button>
+      <button onClick={handleRefresh} disabled={isFetching}>
+        Refresh
+      </button>
     </div>
   );
 }
