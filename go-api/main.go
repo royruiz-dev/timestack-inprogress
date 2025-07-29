@@ -77,6 +77,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 // timeHandler returns current time from database
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	var currentTime time.Time
+	
 	err := dbpool.QueryRow(context.Background(), "SELECT NOW()").Scan(&currentTime)
 	if err != nil {
 		log.Printf("Error querying the database: %v", err)
