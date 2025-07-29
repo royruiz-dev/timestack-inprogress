@@ -4,6 +4,10 @@ import BuiltWith from "./components/BuiltWith";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+function responseData(apiResponse: any) {
+  return apiResponse.data;
+}
+
 function getTimeAgoString(lastUpdated: Date): string {
   const timeSinceRefreshInMs = Date.now() - lastUpdated.getTime();
   let remainingSeconds = Math.floor(timeSinceRefreshInMs / 1000);
@@ -40,9 +44,21 @@ function getTimeAgoString(lastUpdated: Date): string {
 }
 
 function TimeData({ label, url }: { label: string; url: string }) {
+  const [latency, setLatency] = useState<number | null>(null);
+
   const { data, error, isFetching, isLoading, refetch } = useQuery({
     queryKey: [label],
-    queryFn: () => axios.get(url).then((res) => res.data),
+    queryFn: async () => {
+      const start = performance.now(); // preferred over Date.now() for duration measurement
+
+      const resp = await axios.get(url);
+      const output = responseData(resp);
+
+      const end = performance.now();
+      setLatency(Math.round(end - start));
+
+      return output;
+    },
   });
 
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -53,6 +69,13 @@ function TimeData({ label, url }: { label: string; url: string }) {
     setLastUpdated(new Date());
   };
 
+  // Clear latency when fetch error occurs
+  useEffect(() => {
+    if (error) {
+      setLatency(null);
+    }
+    console.log("Latency:", latency, "isLoading:", isLoading, "error:", error);
+  }, [latency, isLoading, error]);
   useEffect(() => {
     const interval = setInterval(() => {
       if (lastUpdated) {
