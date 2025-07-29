@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDate, formatTime } from "./utils/format";
 import "./App.css";
 import BuiltWith from "./components/BuiltWith";
 import { useQuery } from "@tanstack/react-query";
@@ -104,8 +105,10 @@ function TimeData({ label, url }: { label: string; url: string }) {
     <div className="card">
       <h3>{label}</h3>
       <div className="infoGrid">
+        <div className="label">🗓️ Date:</div>
+        <div className="value">{formatDate(data.currentTime)}</div>
         <div className="label">⏰ Time:</div>
-        <div className="value">{data.currentTime}</div>
+        <div className="value">{formatTime(data.currentTime)}</div>
         <div className="label">🔄 Last Refreshed:</div>
         <div className="value">{lastUpdated && timeAgo}</div>
         <div className="label">⚡︎ Latency:</div>
