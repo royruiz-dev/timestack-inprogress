@@ -21,26 +21,25 @@ function getTimeAgoString(lastUpdated: Date): string {
   const timeBlocks = [];
 
   if (hours > 0) {
-    timeBlocks.push(`${hours} hour${hours !== 1 ? "s" : ""}`);
+    timeBlocks.push(`${hours}h`);
   }
   if (minutes > 0) {
-    timeBlocks.push(`${minutes} minute${minutes !== 1 ? "s" : ""}`);
+    timeBlocks.push(`${minutes}m`);
   }
   if (seconds > 0 || timeBlocks.length === 0) {
-    timeBlocks.push(`${seconds} second${seconds !== 1 ? "s" : ""}`);
+    timeBlocks.push(`${seconds}s`);
   }
 
   let timeString = "";
   if (timeBlocks.length === 1) {
     timeString = timeBlocks[0];
   } else if (timeBlocks.length === 2) {
-    timeString = timeBlocks.join(" and ");
+    timeString = timeBlocks.join(" ");
   } else {
-    timeString =
-      timeBlocks.slice(0, -1).join(", ") + ", and " + timeBlocks.at(-1);
+    timeString = timeBlocks.slice(0, -1).join(" ") + " " + timeBlocks.at(-1);
   }
 
-  return `Refreshed ${timeString} ago`;
+  return `${timeString} ago`;
 }
 
 function TimeData({ label, url }: { label: string; url: string }) {
@@ -81,12 +80,14 @@ function TimeData({ label, url }: { label: string; url: string }) {
     }
     console.log("Latency:", latency, "isLoading:", isLoading, "error:", error);
   }, [latency, isLoading, error]);
+
+  // Update timeAgo string every second based on lastUpdated to show live refresh timer
   useEffect(() => {
     const interval = setInterval(() => {
       if (lastUpdated) {
         setTimeAgo(getTimeAgoString(lastUpdated));
       }
-    }, 1000); // Update every second for real-time display
+    }, 1000); // Updates per second (1000 ms) for real-time display
 
     return () => clearInterval(interval);
   }, [lastUpdated]);
