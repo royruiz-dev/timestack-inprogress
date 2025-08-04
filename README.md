@@ -7,7 +7,7 @@ A simple full-stack project designed to run in Docker, including:
 - PostgreSQL database
 - Docker Compose for service orchestration
 
----
+![App Demo](demo/app-demo.gif)
 
 ### Running Services Locally
 
